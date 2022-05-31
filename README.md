@@ -53,7 +53,7 @@ What we need to do now are:
 1) Change file permissions for the id_rsa as `chmod 600 jessie_id_rsa`
 2) Login ssh using the private key: `ssh -i path/to/key_file username@remote_host`
 
-We can assume that the private keys belongs to Jessie -- This name was mentioned in a comment line in website source code (see abobe)
+We can assume that the private keys belongs to Jessie -- This name was mentioned in a comment line in website source code (see above)
 
 ![image](https://user-images.githubusercontent.com/99097743/171085363-81619d9f-110a-4f47-b960-14ecb9ad9df5.png)
 
