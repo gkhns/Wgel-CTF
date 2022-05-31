@@ -1,4 +1,4 @@
-#Linux #Wget #
+#Linux #Wget
 
 **NMAP Scan**
 
